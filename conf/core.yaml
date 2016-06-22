@@ -6,7 +6,7 @@
 cli:
 
     # The address that the cli process will use for callbacks from chaincodes
-    address: {{ .Container.Domain }}:30304
+    address: {{ .Container.IPAddr }}:30304
 
 
 
@@ -23,7 +23,7 @@ rest:
     enabled: true
 
     # The address that the REST service will listen on for incoming requests.
-    address: {{ .Container.Domain }}:5000
+    address: {{ .Container.IPAddr }}:5000
 
 
 ###############################################################################
@@ -91,9 +91,9 @@ peer:
     networkId: dev
 
     # The Address this Peer will listen on
-    listenAddress: {{ .Container.Domain }}:30303
+    listenAddress: {{ .Container.IPAddr }}:30303
     # The Address this Peer will bind to for providing services
-    address: {{ .Container.Domain }}:30303
+    address: {{ .Container.IPAddr }}:30303
     # Whether the Peer should programmatically determine the address to bind to.
     # This case is useful for docker containers.
     addressAutoDetect: false
@@ -140,7 +140,7 @@ peer:
 
         events:
             # The address that the Event service will be enabled on the validator
-            address: {{ .Container.Domain }}:31315
+            address: {{ .Container.IPAddr }}:31315
 
             # total number of events that could be buffered without blocking the
             # validator sends
@@ -228,7 +228,7 @@ peer:
 
     profile:
         enabled:     false
-        listenAddress: {{ .Container.Domain }}:6060
+        listenAddress: {{ .Container.IPAddr }}:6060
 
 ###############################################################################
 #
@@ -286,8 +286,7 @@ chaincode:
         # be appended depedendent upon the chaincode specification.
         Dockerfile:  |
             from ckeyer/obc:build-0621
-            # COPY src $GOPATH/src
-            WORKDIR $GOPATH
+            COPY src/github.com/hyperledger/fabric/peer/core.yaml $GOPATH/src/github.com/hyperledger/fabric/peer
 
     car:
 
@@ -312,7 +311,7 @@ chaincode:
     # typically installpath should not be modified. Otherwise, user must ensure
     # the chaincode executable is placed in the path specifed by installpath in
     # the image
-    installpath: /opt/gopath/bin/
+    installpath: /go/bin/
 
 ###############################################################################
 #
