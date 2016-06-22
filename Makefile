@@ -6,7 +6,7 @@ PWD := $(shell pwd)
 default:
 
 build:
-	docker build -f Dockerfile -t $(IMAGE_NAME):build$(SUF_TAG) .
+	docker build -f Dockerfile.build -t $(IMAGE_NAME):build$(SUF_TAG) .
 	-mkdir bin
 	docker run --rm \
 	 --name buildover \
