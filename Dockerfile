@@ -8,7 +8,7 @@ ENV GOPATH=/go
 ENV PATH=$PATH:$GOPATH/bin
 ENV BRANCH=csphere-0715
 
-RUN git clone https://github.com/ckeyer/fabric.git -b $(BRANCH) $GOPATH/src/github.com/hyperledger/fabric && \
+RUN git clone https://github.com/ckeyer/fabric.git -b $BRANCH $GOPATH/src/github.com/hyperledger/fabric && \
 	cd $GOPATH/src/github.com/hyperledger/fabric/ && \
 	go build -o $GOPATH/bin/peer ./peer/main.go && \
 	go build -o $GOPATH/bin/obc-ca ./membersrvc/server.go 
