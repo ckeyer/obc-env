@@ -15,6 +15,8 @@ RUN apk add --update rocksdb-dev --update-cache --repository http://dl-4.alpinel
 	apk add --update g++ && \
 	rm -rf /var/cache/apk/*
 
+RUN apk add --update bash bash-completion
+
 ENV GOPATH=/go
 ENV PATH=$PATH:$GOPATH/bin
 
