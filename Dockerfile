@@ -30,3 +30,10 @@ RUN cd /tmp && \
 	make && \
 	make install && \
 	rm -rf /tmp/*
+
+RUN mkdir -p /go/src/github.com/golang && \
+	git clone https://github.com/golang/protobuf.git /go/src/github.com/golang/protobuf && \
+	cd /go/src/github.com/golang/protobuf && \
+	git checkout efcaa340c1a788c79e1ca31217d66aa41c405a51 && \
+	go install github.com/golang/protobuf/proto && \
+	go install github.com/golang/protobuf/protoc-gen-go
