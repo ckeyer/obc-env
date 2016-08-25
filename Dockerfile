@@ -1,6 +1,6 @@
 FROM python:2
 
-MAINTAINER Chuanjian Wang
+MAINTAINER Chuanjian Wang <me@ckeyer.com>
 
 RUN curl https://bootstrap.pypa.io/get-pip.py |python
 
