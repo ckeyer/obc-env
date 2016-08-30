@@ -36,4 +36,5 @@ RUN cd /tmp && \
 	PORTABLE=1 make shared_lib && \
 	INSTALL_PATH=/usr/local make install-shared && \
 	ldconfig && \
+	ln -s /usr/local/lib/librocksdb.so.4.1.0 /lib64/librocksdb.so.4.1 && \
 	rm -rf /tmp/*
