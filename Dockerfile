@@ -1,39 +1,39 @@
-FROM ckeyer/obc:base
+FROM centos:7
 
-MAINTAINER ckeyer <me@ckeyer.com>
+MAINTAINER Chuanjian Wang <me@ckeyer.com>
 
-RUN apk add --update curl autoconf automake libtool unzip 
+RUN yum install -y make gcc gcc-c++ snappy snappy-devel zlib zlib-devel bzip2 bzip2-devel vim git unzip wget 
 
-RUN apk add --update python python-dev cython cython-dev && \
-	curl https://bootstrap.pypa.io/get-pip.py | python
+### install protoc 
+RUN cd /usr && \
+	wget https://github.com/google/protobuf/releases/download/v3.0.0/protoc-3.0.0-linux-x86_64.zip && \
+	unzip protoc-3.0.0-linux-x86_64.zip && \
+	rm -f protoc-3.0.0-linux-x86_64.zip
 
-RUN cd /tmp && \
-	git clone https://github.com/grpc/grpc.git && \
-	cd grpc && \
-	pip install -rrequirements.txt && \
-	git checkout tags/release-0_13_1 && \
-	sed -i -e "s/boringssl.googlesource.com/github.com\/linux-on-ibm-z/" .gitmodules && \
-	git submodule sync && \
-	git submodule update --init && \
-	cd third_party/boringssl && \
-	git checkout s390x-big-endian && \
-	cd ../.. && \
-	GRPC_PYTHON_BUILD_WITH_CYTHON=1 pip install . && \
-	rm -rf /tmp/*
+### install golang
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/opt/gopath
+ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+RUN cd /usr/local && \
+	wget https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz && \
+	tar zxf go1.7.linux-amd64.tar.gz && \
+	rm -f go1.7.linux-amd64.tar.gz
 
-RUN cd /tmp && \
-	git clone https://github.com/google/protobuf.git && \
-	cd protobuf && \
-	git checkout v3.0.0-beta-2 && \ 
-	./autogen.sh && \
-	./configure && \
-	make && \
-	make install && \
-	rm -rf /tmp/*
-
-RUN mkdir -p /go/src/github.com/golang && \
-	git clone https://github.com/golang/protobuf.git /go/src/github.com/golang/protobuf && \
-	cd /go/src/github.com/golang/protobuf && \
+### install protoc-gen-go (efcaa340c1a788c79e1ca31217d66aa41c405a51)
+RUN mkdir -p $GOPATH/src/github.com/golang && \
+	git clone https://github.com/golang/protobuf.git $GOPATH/src/github.com/golang/protobuf && \
+	cd $GOPATH/src/github.com/golang/protobuf && \
 	git checkout efcaa340c1a788c79e1ca31217d66aa41c405a51 && \
 	go install github.com/golang/protobuf/proto && \
 	go install github.com/golang/protobuf/protoc-gen-go
+
+### install RocksDB
+RUN cd /tmp && \
+	wget https://github.com/facebook/rocksdb/archive/v4.1.tar.gz && \
+	tar zxf v4.1.tar.gz && \
+	rm -f v4.1.tar.gz && \
+	cd rocksdb-4.1 && \
+	PORTABLE=1 make shared_lib && \
+	INSTALL_PATH=/usr/local make install-shared && \
+	ldconfig && \
+	rm -rf /tmp/*
