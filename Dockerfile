@@ -4,12 +4,6 @@ MAINTAINER Chuanjian Wang <me@ckeyer.com>
 
 RUN yum install -y make gcc gcc-c++ snappy snappy-devel zlib zlib-devel bzip2 bzip2-devel vim git unzip wget 
 
-### install protoc 
-RUN cd /usr && \
-	wget https://github.com/google/protobuf/releases/download/v3.0.0/protoc-3.0.0-linux-x86_64.zip && \
-	unzip protoc-3.0.0-linux-x86_64.zip && \
-	rm -f protoc-3.0.0-linux-x86_64.zip
-
 ### install golang
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/opt/gopath
@@ -18,14 +12,6 @@ RUN cd /usr/local && \
 	wget https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz && \
 	tar zxf go1.7.linux-amd64.tar.gz && \
 	rm -f go1.7.linux-amd64.tar.gz
-
-### install protoc-gen-go (efcaa340c1a788c79e1ca31217d66aa41c405a51)
-RUN mkdir -p $GOPATH/src/github.com/golang && \
-	git clone https://github.com/golang/protobuf.git $GOPATH/src/github.com/golang/protobuf && \
-	cd $GOPATH/src/github.com/golang/protobuf && \
-	git checkout efcaa340c1a788c79e1ca31217d66aa41c405a51 && \
-	go install github.com/golang/protobuf/proto && \
-	go install github.com/golang/protobuf/protoc-gen-go
 
 ### install RocksDB
 RUN cd /tmp && \
@@ -38,3 +24,13 @@ RUN cd /tmp && \
 	ldconfig && \
 	ln -s /usr/local/lib/librocksdb.so.4.1.0 /lib64/librocksdb.so.4.1 && \
 	rm -rf /tmp/*
+
+### install protoc-gen-go (efcaa340c1a788c79e1ca31217d66aa41c405a51)
+RUN go get github.com/golang/protobuf/proto && \
+	go get github.com/golang/protobuf/protoc-gen-go
+
+### install protoc 
+RUN cd /usr && \
+	wget https://github.com/google/protobuf/releases/download/v3.0.2/protoc-3.0.2-linux-x86_64.zip && \
+	unzip protoc-3.0.2-linux-x86_64.zip && \
+	rm -f protoc-3.0.2-linux-x86_64.zip
