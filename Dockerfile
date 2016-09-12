@@ -34,3 +34,5 @@ RUN cd /usr && \
 	wget https://github.com/google/protobuf/releases/download/v3.0.2/protoc-3.0.2-linux-x86_64.zip && \
 	unzip protoc-3.0.2-linux-x86_64.zip && \
 	rm -f protoc-3.0.2-linux-x86_64.zip
+
+RUN go get github.com/ckeyer/go-bindata/...
