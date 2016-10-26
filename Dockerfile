@@ -9,9 +9,9 @@ ENV GOROOT=/usr/local/go
 ENV GOPATH=/opt/gopath
 ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 RUN cd /usr/local && \
-	wget https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz && \
-	tar zxf go1.7.linux-amd64.tar.gz && \
-	rm -f go1.7.linux-amd64.tar.gz
+	wget https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz && \
+	tar zxf go1.7.3.linux-amd64.tar.gz && \
+	rm -f go1.7.3.linux-amd64.tar.gz
 
 ### install RocksDB
 RUN cd /tmp && \
