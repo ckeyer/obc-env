@@ -4,7 +4,7 @@ RUN apk add --update rocksdb-dev sqlite-dev --update-cache --repository http://d
 	apk add --update snappy-dev zlib-dev libbz2 git wget vim go make gcc g++ nodejs && \
 	rm -rf /var/cache/apk/*
 
-ENV GOPATH=/go
+ENV GOPATH=/opt/gopath
 ENV PATH=$PATH:$GOPATH/bin
 ENV BRANCH=csphere-0715
 
