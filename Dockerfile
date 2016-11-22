@@ -35,4 +35,8 @@ RUN cd /usr && \
 	unzip protoc-3.0.2-linux-x86_64.zip && \
 	rm -f protoc-3.0.2-linux-x86_64.zip
 
-RUN go get github.com/ckeyer/go-bindata/...
+RUN go get github.com/ckeyer/go-bindata/... && \
+	go get golang.org/x/sys/... && \
+	go get golang.org/x/crypto/... && \
+	go get golang.org/x/text/... && \
+	go get golang.org/x/net/...
