@@ -17,8 +17,7 @@ RUN git clone https://github.com/ckeyer/fabric.git -b $BRANCH $GOPATH/src/github
 
 ENV PEER_CFG_PATH=$GOPATH/bin
 
-COPY conf/core.yaml $PEER_CFG_PATH
-COPY conf/membersrvc.yaml $PEER_CFG_PATH
+COPY conf/ $PEER_CFG_PATH
 
 WORKDIR  $GOPATH/bin
 
