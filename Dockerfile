@@ -37,6 +37,6 @@ RUN cd /usr && \
 
 RUN go get github.com/ckeyer/go-bindata/... 2>&1
 RUN go get golang.org/x/sys 2>&1
-RUN go get go get golang.org/x/crypto 2>&1
+RUN go get golang.org/x/crypto 2>&1
 RUN go get golang.org/x/text 2>&1
 RUN go get golang.org/x/net 2>&1
