@@ -15,6 +15,12 @@ RUN git clone https://github.com/ckeyer/fabric.git -b $BRANCH $GOPATH/src/github
 	go build -o $GOPATH/bin/peer ./peer/main.go && \
 	go build -o $GOPATH/bin/obc-ca ./membersrvc/server.go 
 
+RUN go get github.com/ckeyer/go-bindata/... || true
+RUN go get golang.org/x/sys || true
+RUN go get golang.org/x/crypto || true
+RUN go get golang.org/x/text || true
+RUN go get golang.org/x/net || true
+
 ENV PEER_CFG_PATH=$GOPATH/bin
 
 COPY conf/ $PEER_CFG_PATH
