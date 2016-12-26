@@ -4,7 +4,7 @@ MAINTAINER Chuanjian Wang <me@ckeyer.com>
 
 ENV GOPATH=/opt/gopath
 
-RUN yum install -y make gcc gcc-g++ snappy snappy-devel zlib zlib-devel bzip2 bzip2-devel unzip wget 
+RUN yum install -y make gcc gcc-c++ snappy snappy-devel zlib zlib-devel bzip2 bzip2-devel unzip wget 
 
 ### install RocksDB
 RUN cd /tmp && \
