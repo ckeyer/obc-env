@@ -1,11 +1,19 @@
-FROM alpine:edge
+FROM centos:7
 
 MAINTAINER Chuanjian Wang <me@ckeyer.com>
 
-RUN apk add --update rocksdb sqlite --update-cache --repository http://dl-4.alpinelinux.org/alpine/edge/testing && \
-	apk add --update snappy zlib libbz2 && \
-	rm -rf /var/cache/apk/*
+ENV GOPATH=/opt/gopath
 
-ADD bin /usr/local/bin
+RUN yum install -y make snappy snappy-devel zlib zlib-devel bzip2 bzip2-devel unzip wget 
 
-WORKDIR /usr/local/bin
+### install RocksDB
+RUN cd /tmp && \
+	wget https://github.com/facebook/rocksdb/archive/v4.1.tar.gz && \
+	tar zxf v4.1.tar.gz && \
+	rm -f v4.1.tar.gz && \
+	cd rocksdb-4.1 && \
+	PORTABLE=1 make shared_lib && \
+	INSTALL_PATH=/usr/local make install-shared && \
+	ldconfig && \
+	ln -s /usr/local/lib/librocksdb.so.4.1.0 /lib64/librocksdb.so.4.1 && \
+	rm -rf /tmp/*
